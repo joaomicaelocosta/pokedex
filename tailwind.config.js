@@ -9,7 +9,11 @@ module.exports = {
     "./app.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      minWidth: {
+        '130': '130px',
+      },
+    },
   },
   plugins: [],
 }
