@@ -15,7 +15,7 @@ export const usePokemonStore = defineStore("pokemon", () => {
   async function fetchPokemons(): Promise<Pokemon[]> {
     try {
       const pokemons = await useFetch(
-        "https://pokeapi.co/api/v2/pokemon?limit=10"
+        "https://pokeapi.co/api/v2/pokemon?limit=50"
       );
       for (let pokemon of pokemons.data.value.results as any) {
         const name = pokemon.name;

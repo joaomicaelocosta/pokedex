@@ -15,9 +15,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-  hooks: {
-    ready: (ctx) => console.log(ctx),
-  },
   devtools: { enabled: true },
   modules: ["@vueuse/nuxt", "@pinia/nuxt"],
   pinia: {
