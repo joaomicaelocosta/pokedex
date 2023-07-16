@@ -1,3 +1,5 @@
+import data from "./data.json";
+
 export interface Pokemon {
   name: string;
   types: string[];
@@ -16,10 +18,10 @@ export const usePokemonStore = defineStore("pokemon", () => {
 
   async function fetchPokemons(): Promise<Pokemon[]> {
     try {
-      const pokemons = await useFetch(
+      /* const pokemons = await useFetch(
         moreUrl.value
           ? moreUrl.value
-          : "https://pokeapi.co/api/v2/pokemon?limit=25"
+          : "https://pokeapi.co/api/v2/pokemon?limit=300"
       );
       console.log("pokemons first load", pokemons.data);
       isLoading.value = true;
@@ -49,8 +51,10 @@ export const usePokemonStore = defineStore("pokemon", () => {
         };
         // Push the information into the pokemons array
         pokemonList.value.push(newPoke);
-      }
+      } */
+      pokemonList.value = data;
       isLoading.value = false;
+      console.log("pokemons after load", pokemonList.value);
       return pokemonList.value;
     } catch (error) {
       console.error("Error fetching pokemon data:", error);
