@@ -79,20 +79,23 @@ const colorByType = (type: string) => {
 <template>
   <div class="fixed inset-0 flex items-center justify-center">
     <div
-      class="relative z-30 border rounded-xl border-gray-800 bg-white shadow-xl flex flex-col gap-4 p-6"
+      class="relative p-4 md:p-8 z-30 border rounded-xl border-gray-800 bg-amber-50 shadow-xl flex flex-col gap-4"
     >
       <div class="text-2xl capitalize text-center">
         {{ props.pokemon.name }}
       </div>
-      <div class="flex flex-row gap-4">
-        <div class="w-1/2 flex justify-center">
-          <img :src="props.pokemon.image" :alt="props.pokemon.name" />
+      <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
+        <div class="flex justify-center bg-white">
+          <img class="" :src="props.pokemon.image" :alt="props.pokemon.name" />
         </div>
-        <div class="w-1/2">
+        <div class="max-w-xs">
           <div class="flex flex-row">
             <div class="flex justify-center my-auto">Types:</div>
             <div
-              :class="'   m-1 rounded-xl px-3  text-white ' + colorByType(type)"
+              :class="
+                'shadow-xl border  m-1 rounded-xl px-3  text-white ' +
+                colorByType(type)
+              "
               v-for="(type, index) in props.pokemon.types"
               :key="index"
             >
@@ -100,9 +103,9 @@ const colorByType = (type: string) => {
             </div>
           </div>
           <div class="my-3">
-            <table class="grid grid-cols-2 border border-blue-400">
+            <table class="grid grid-cols-2 bg-blue-400 border border-white">
               <div
-                class="border p-1 border-blue-400 no-wrap"
+                class="border p-1 border-white no-wrap text-white"
                 v-for="(stat, index) in props.pokemon.stats"
                 :key="index"
               >

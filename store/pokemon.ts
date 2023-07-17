@@ -14,7 +14,7 @@ export interface Pokemon {
 export const usePokemonStore = defineStore("pokemon", () => {
   const pokemonList = ref<Pokemon[]>([]);
   const isLoading = ref<boolean>(false);
-  const moreUrl = ref<string>("");
+  const isSearching = ref<boolean>(false);
 
   async function fetchPokemons(): Promise<Pokemon[]> {
     try {
@@ -63,6 +63,14 @@ export const usePokemonStore = defineStore("pokemon", () => {
     }
   }
 
+  function searchPokemon(name: string): Promise<Pokemon[]> {
+    pokemonList.value = pokemonList.value.filter((p: Pokemon) => {
+      return p.name.includes(name);
+    });
+    isSearching.value = true;
+    return pokemonList.value;
+  }
+
   function filterList(filter: string) {
     pokemonList.value.filter((p: Pokemon) => p.name.includes(filter));
   }
@@ -80,8 +88,10 @@ export const usePokemonStore = defineStore("pokemon", () => {
   return {
     isLoading,
     pokemonList,
+    isSearching,
     fetchPokemons,
     filterList,
     loadMorePokemons,
+    searchPokemon,
   };
 });
