@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Pokemon } from "~/store/pokemon";
 const emit = defineEmits(["closePopup"]);
+const { useDeSlugify, useColorByType } = useUtils();
 
 const props = defineProps<{
   pokemon: Pokemon;
 }>();
-
 const locations = ref<string>(
   "Can be found in " + props.pokemon.locations.slice(0, 3).join(", ")
 );
@@ -15,7 +15,6 @@ const closePopup = () => {
 };
 
 const colorByType = (type: string) => {
-  const { useColorByType } = useUtils();
   return useColorByType(type);
 };
 </script>
@@ -50,16 +49,16 @@ const colorByType = (type: string) => {
           <div class="my-3">
             <table class="grid grid-cols-2 bg-blue-400 border border-white">
               <div
-                class="border p-1 border-white no-wrap text-white"
+                class="border p-1 border-white no-wrap text-white capitalize"
                 v-for="(stat, index) in props.pokemon.stats"
                 :key="index"
               >
-                {{ stat.stat_name }}: {{ stat.base_stat }}
+                {{ useDeSlugify(stat.stat_name) }}: {{ stat.base_stat }}
               </div>
             </table>
           </div>
           <div class="flex flex-row">
-            <div>{{ locations }}</div>
+            <div>{{ useDeSlugify(locations) }}</div>
           </div>
         </div>
       </div>

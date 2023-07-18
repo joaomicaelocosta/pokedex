@@ -60,5 +60,9 @@ export const useUtils = () => {
     return color;
   };
 
-  return { useColorByType };
+  const useDeSlugify = (slug: string) => {
+    return slug.replace(/-/g, " ");
+  };
+
+  return { useColorByType, useDeSlugify };
 };
