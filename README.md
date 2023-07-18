@@ -1,63 +1,30 @@
-# Nuxt 3 Minimal Starter
+# Pokedex App
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This project was developed utilizing Nuxt 3, supplemented with TypeScript for type safety and enhanced developer productivity. For styling, we leveraged the capabilities of Tailwind CSS.
+
+## Important Note
+
+The API specified by the challenge did not support a single request for retrieving a list of Pokémon with their corresponding data, such as type, stats, and locations. In order to obtain this information, it was necessary to make individual requests for each Pokémon's details. This approach required multiple requests just to display a list, which was not optimal. Therefore, I decided to develop a simple API utilizing Nuxt's built-in server functions that could provide me with the required information in an efficient manner.
+
+## Features
+
+1. List of Pokemons
+2. Filter pokemon by type
+3. Search pokemon by name
+4. Detailed pokemon data
+5. Dedicated API
+6. Responsive UI
 
 ## Setup
 
-Make sure to install the dependencies:
+To run this code locally follow this instructions:
 
 ```bash
 # npm
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+# run
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+The development server should be on `http://localhost:3000`
