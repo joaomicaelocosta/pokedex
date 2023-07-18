@@ -11,69 +11,12 @@ const locations = ref<string>(
 );
 
 const closePopup = () => {
-  console.log("closePopup");
   emit("closePopup");
 };
 
 const colorByType = (type: string) => {
-  let color: string = "";
-  switch (type) {
-    case "grass":
-      color = "bg-green-400";
-      break;
-    case "fire":
-      color = "bg-red-400";
-      break;
-    case "water":
-      color = "bg-blue-400";
-      break;
-    case "bug":
-      color = "bg-green-400";
-      break;
-    case "normal":
-      color = "bg-gray-400";
-      break;
-    case "poison":
-      color = "bg-purple-400";
-      break;
-    case "electric":
-      color = "bg-yellow-400";
-      break;
-    case "ground":
-      color = "bg-yellow-400";
-      break;
-    case "fairy":
-      color = "bg-pink-400";
-      break;
-    case "fighting":
-      color = "bg-red-400";
-      break;
-    case "psychic":
-      color = "bg-purple-400";
-      break;
-    case "rock":
-      color = "bg-gray-400";
-      break;
-    case "ghost":
-      color = "bg-purple-400";
-      break;
-    case "ice":
-      color = "bg-blue-400";
-      break;
-    case "dragon":
-      color = "bg-red-400";
-      break;
-    case "dark":
-      color = "bg-gray-400";
-      break;
-    case "steel":
-      color = "bg-gray-400";
-      break;
-    case "flying":
-      color = "bg-blue-400";
-      break;
-  }
-  return color;
+  const { useColorByType } = useUtils();
+  return useColorByType(type);
 };
 </script>
 <template>
@@ -85,7 +28,9 @@ const colorByType = (type: string) => {
         {{ props.pokemon.name }}
       </div>
       <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
-        <div class="flex justify-center bg-white">
+        <div
+          class="flex justify-center bg-white rounded-xl border border-gray-800 shadow-xl"
+        >
           <img class="" :src="props.pokemon.image" :alt="props.pokemon.name" />
         </div>
         <div class="max-w-xs">

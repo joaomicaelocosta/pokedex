@@ -15,9 +15,34 @@ export const usePokemonStore = defineStore("pokemon", () => {
   const pokemonList = ref<Pokemon[]>([]);
   const isLoading = ref<boolean>(false);
   const isSearching = ref<boolean>(false);
+  const selectedTypes = ref<string[]>([]);
+  const types = ref<string[]>([
+    "grass",
+    "fire",
+    "water",
+    "bug",
+    "normal",
+    "poison",
+    "electric",
+    "ground",
+    "fairy",
+    "fighting",
+    "psychic",
+    "rock",
+    "ghost",
+    "ice",
+    "dragon",
+    "dark",
+    "steel",
+    "flying",
+  ]);
 
   async function fetchPokemons(): Promise<Pokemon[]> {
     try {
+      //This code is commented because the API doesn't provide the information we need in order to show the pokemon's locations, stats and types
+      //We needed to do multiple requests to get that information, which made the website very slow
+      //We are using a local json file instead
+
       /* const pokemons = await useFetch(
         moreUrl.value
           ? moreUrl.value
@@ -54,7 +79,6 @@ export const usePokemonStore = defineStore("pokemon", () => {
       } */
       pokemonList.value = data;
       isLoading.value = false;
-      console.log("pokemons after load", pokemonList.value);
       return pokemonList.value;
     } catch (error) {
       console.error("Error fetching pokemon data:", error);
@@ -71,12 +95,14 @@ export const usePokemonStore = defineStore("pokemon", () => {
     return pokemonList.value;
   }
 
-  function filterList(filter: string) {
-    pokemonList.value.filter((p: Pokemon) => p.name.includes(filter));
+  function filterByType(): Promise<Pokemon[]> {
+    pokemonList.value = pokemonList.value.filter((p: Pokemon) =>
+      selectedTypes.value.every((type) => p.types.includes(type))
+    );
+    return pokemonList.value;
   }
 
   function loadMorePokemons() {
-    console.log("load more pokemons");
     if (!isLoading.value) {
       isLoading.value = true;
       fetchPokemons().then(() => {
@@ -89,8 +115,10 @@ export const usePokemonStore = defineStore("pokemon", () => {
     isLoading,
     pokemonList,
     isSearching,
+    types,
+    selectedTypes,
     fetchPokemons,
-    filterList,
+    filterByType,
     loadMorePokemons,
     searchPokemon,
   };

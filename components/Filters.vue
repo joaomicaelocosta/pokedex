@@ -1,0 +1,127 @@
+<script setup lang="ts">
+import { usePokemonStore } from "~/store/pokemon";
+
+const store = usePokemonStore();
+
+const showDropdown = ref(false);
+
+let searchQuery = ref("");
+
+//Search pokemon by name
+const search = () => {
+  store.searchPokemon(searchQuery.value);
+};
+
+//Reset filters
+const reset = () => {
+  searchQuery.value = "";
+  store.isSearching = false;
+  store.selectedTypes = [];
+  store.fetchPokemons();
+};
+
+//Gets the color code of the type
+const colorByType = (type: string) => {
+  const { useColorByType } = useUtils();
+  return useColorByType(type);
+};
+
+//Checks if the type is selected or not and adds or removes it from the list of selected types
+const toggleTypeSelection = (type: string) => {
+  const index = store.selectedTypes.indexOf(type);
+  if (index > -1) {
+    // type is already selected, remove it
+    store.selectedTypes.splice(index, 1);
+    //call fetchPokemons() to repopulate the list of pokemons
+    store.fetchPokemons();
+    store.filterByType();
+    if (store.selectedTypes.length < 1) {
+      store.isSearching = false;
+      store.fetchPokemons();
+    }
+  } else {
+    // type is not selected, add it
+    store.isSearching = true;
+    store.selectedTypes.push(type);
+    store.filterByType();
+  }
+};
+
+//Checks if the type is selected or not
+const isSelected = (type: string) => {
+  return store.selectedTypes.indexOf(type) > -1;
+};
+</script>
+<template>
+  <div class="flex justify-center mt-8 mx-2">
+    <div class="relative">
+      <input
+        class="block my-auto border border-gray-400 rounded-xl py-1 px-2 w-64 h-10"
+        type="text"
+        placeholder="Search"
+        v-model="searchQuery"
+        @keyup.enter="search"
+      />
+      <IconsSearch
+        @click="search"
+        class="w-5 absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+      />
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <div class="hidden sm:flex justify-center mt-8">
+      <div class="flex flex-row gap-2 w-1/2 flex-wrap">
+        <div
+          v-for="(type, index) in store.types"
+          :key="index"
+          :class="[
+            'shadow-xl border m-1 rounded-full px-3 text-white text-center cursor-pointer ',
+            colorByType(type),
+            isSelected(type) ? 'opacity-100' : 'opacity-20',
+          ]"
+          @click="toggleTypeSelection(type)"
+        >
+          {{ type }}
+        </div>
+      </div>
+    </div>
+    <div class="relative block sm:hidden">
+      <button
+        @click="showDropdown = !showDropdown"
+        class="border border-gray-400 rounded-xl py-1 px-2 w-64 h-10 bg-white text-gray-400 text-left mt-2"
+      >
+        Select Types
+      </button>
+      <div
+        class="absolute z-10 w-64 bg-white rounded-lg shadow-lg grid grid-cols-3 gap-1 p-1 translate-x-1/2 right-1/2"
+        v-show="showDropdown"
+      >
+        <div
+          v-for="(type, index) in store.types"
+          :key="index"
+          :class="
+            'shadow-xl border m-1 rounded-full px-1 text-white text-center  ' +
+            colorByType(type) +
+            (store.selectedTypes.includes(type)
+              ? ' opacity-100'
+              : ' opacity-20')
+          "
+          @click="toggleTypeSelection(type)"
+        >
+          {{ type }}
+        </div>
+      </div>
+      <IconsArrow
+        @click="search"
+        class="w-5 absolute right-2 top-1/2 transform -translate-y-1/2 mt-1 cursor-pointer"
+      />
+    </div>
+  </div>
+  <div v-if="store.isSearching" class="flex justify-center mt-2 md:mt-8">
+    <span
+      @click="reset"
+      class="bg-red-400 text-white rounded-xl px-4 cursor-pointer"
+      >reset</span
+    >
+  </div>
+</template>
