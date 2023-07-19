@@ -46,6 +46,7 @@ onMounted(() => {
 });
 </script>
 <template>
+  <Filters />
   <div class="flex mx-auto justify-center">
     <div
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-y-auto items-center md:p-8 py-8"

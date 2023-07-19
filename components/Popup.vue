@@ -21,7 +21,7 @@ const colorByType = (type: string) => {
 <template>
   <div class="fixed inset-0 flex items-center justify-center">
     <div
-      class="relative p-4 md:p-8 z-30 border rounded-xl border-gray-800 bg-amber-50 shadow-xl flex flex-col gap-4"
+      class="p-4 md:p-8 z-30 border rounded-xl border-gray-800 bg-amber-50 shadow-xl flex flex-col gap-4"
     >
       <div class="text-2xl capitalize text-center">
         {{ props.pokemon.name }}
@@ -37,7 +37,7 @@ const colorByType = (type: string) => {
             <div class="flex justify-center my-auto">Types:</div>
             <div
               :class="
-                'shadow-xl border  m-1 rounded-xl px-3  text-white ' +
+                'shadow-xl border  m-1 rounded-xl px-3  text-white  ' +
                 colorByType(type)
               "
               v-for="(type, index) in props.pokemon.types"
@@ -65,7 +65,7 @@ const colorByType = (type: string) => {
     </div>
     <div
       @click="closePopup"
-      class="absolute top-0 left-0 w-full h-full bg-black z-10 opacity-20"
+      class="absolute top-0 left-0 w-full h-full bg-black z-20 opacity-20"
     ></div>
   </div>
 </template>

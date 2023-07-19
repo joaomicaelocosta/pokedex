@@ -15,20 +15,13 @@ const isValid = computed(() => {
 //Search pokemon by name
 const search = () => {
   if (!isValid.value) return;
-  if (searchQuery.value.trim() === "") {
-    store.isSearching = false;
-    store.fetchPokemons();
-    return;
-  }
   store.searchPokemon(searchQuery.value);
 };
 
 //Reset filters
 const reset = () => {
   searchQuery.value = "";
-  store.isSearching = false;
-  store.selectedTypes = [];
-  store.fetchPokemons();
+  store.resetFilters();
 };
 
 //Gets the color code of the type
@@ -43,19 +36,15 @@ const toggleTypeSelection = (type: string) => {
   if (index > -1) {
     // type is already selected, remove it
     store.selectedTypes.splice(index, 1);
-    //call fetchPokemons() to repopulate the list of pokemons
-    store.fetchPokemons();
-    store.filterByType();
     if (store.selectedTypes.length < 1) {
       store.isSearching = false;
-      store.fetchPokemons();
     }
   } else {
     // type is not selected, add it
     store.isSearching = true;
     store.selectedTypes.push(type);
-    store.filterByType();
   }
+  store.fetchPokemons();
 };
 
 //Checks if the type is selected or not
@@ -111,10 +100,10 @@ const isSelected = (type: string) => {
         </div>
       </div>
     </div>
-    <div class="relative block sm:hidden">
+    <div class="relative block sm:hidden z-5">
       <button
         @click="showDropdown = !showDropdown"
-        class="border border-gray-400 rounded-xl py-1 px-2 w-64 h-10 bg-white text-gray-400 text-left mt-2 relative z-20"
+        class="border border-gray-400 rounded-xl py-1 px-2 w-64 h-10 bg-white text-gray-400 text-left mt-2 z-20"
       >
         Select Types
       </button>
@@ -139,7 +128,7 @@ const isSelected = (type: string) => {
       </div>
       <IconsArrow
         @click="showDropdown = !showDropdown"
-        class="w-5 absolute right-2 top-1/2 transform -translate-y-1/2 mt-1 cursor-pointer z-30"
+        class="w-5 h-5 absolute right-2 top-1/2 transform -translate-y-1/2 mt-1 cursor-pointer"
       />
     </div>
   </div>
@@ -153,6 +142,6 @@ const isSelected = (type: string) => {
   <div
     v-if="showDropdown"
     @click="showDropdown = false"
-    class="absolute top-0 left-0 w-full h-full bg-black z-10 opacity-20"
+    class="absolute top-0 left-0 w-full h-full z-10 opacity-20"
   ></div>
 </template>
