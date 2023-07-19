@@ -6,8 +6,11 @@ const { useDeSlugify, useColorByType } = useUtils();
 const props = defineProps<{
   pokemon: Pokemon;
 }>();
+
 const locations = ref<string>(
-  "Can be found in " + props.pokemon.locations.slice(0, 3).join(", ")
+  props.pokemon.locations.length === 0
+    ? "Cannot be found, only evolved!"
+    : "Can be found in " + props.pokemon.locations.slice(0, 3).join(", ")
 );
 
 const closePopup = () => {
@@ -59,6 +62,9 @@ const colorByType = (type: string) => {
           </div>
           <div class="flex flex-row">
             <div>{{ useDeSlugify(locations) }}</div>
+            <div v-if="locations.length === 0">
+              Can't be found, only evolved
+            </div>
           </div>
         </div>
       </div>
