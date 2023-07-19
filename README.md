@@ -1,6 +1,7 @@
 # Pokedex App
 
-This project was developed utilizing Nuxt 3, supplemented with TypeScript for type safety and enhanced developer productivity. For styling, I leveraged the capabilities of Tailwind CSS.
+This project was developed utilizing Nuxt 3, supplemented with TypeScript for type safety and enhanced developer productivity. For styling, I leveraged the capabilities of Tailwind CSS. Deployed in Vercel: https://pokedex-ten-beta-95.vercel.app
+
 
 ## Important Note
 
