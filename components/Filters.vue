@@ -7,6 +7,7 @@ const showDropdown = ref(false);
 
 let searchQuery = ref("");
 
+//Checks if the search query has only valid characters
 const isValid = computed(() => {
   const regex = /^[a-zA-Z\s]*$/;
   return regex.test(searchQuery.value);

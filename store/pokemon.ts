@@ -40,12 +40,17 @@ export const usePokemonStore = defineStore("pokemon", () => {
   async function fetchPokemons(): Promise<Pokemon[]> {
     try {
       const response = await useFetch(
-        `/api/list?limit=${ammount.value}&search=${
-          searchQuery.value
-        }&types=${selectedTypes.value.join("-")}`
+        `/api/list?limit=${
+          ammount.value
+        }&search=${searchQuery.value.toLowerCase()}&types=${selectedTypes.value.join(
+          "-"
+        )}`
       );
-      pokemonList.value = response.data.value.data;
-
+      if (response.data && response.data.value) {
+        pokemonList.value = response.data.value.data;
+      } else {
+        throw new Error("Invalid data structure received.");
+      }
       isLoading.value = false;
       return pokemonList.value;
     } catch (error) {
@@ -78,6 +83,41 @@ export const usePokemonStore = defineStore("pokemon", () => {
       });
     }
   }
+
+  //Function used to get all the pokemon data to save on my own API
+  /* async function getData() {
+    let data: Pokemon[] = [];
+    const pokemons = await useFetch(
+      "https://pokeapi.co/api/v2/pokemon?limit=30"
+    );
+    for (let pokemon of pokemons.data.value.results as any) {
+      const name = pokemon.name;
+      // Get detailed information
+      const detailsResponse = await useFetch(
+        `https://pokeapi.co/api/v2/pokemon/${name}`
+      );
+      const details: any = detailsResponse.data.value;
+      // Get location information
+      const locationResponse = await useFetch(
+        `https://pokeapi.co/api/v2/pokemon/${name}/encounters`
+      );
+      const locations: any = locationResponse.data.value;
+
+      let newPoke: Pokemon = {
+        name: details.name,
+        types: details.types.map((t: any) => t.type.name),
+        stats: details.stats.map((s: any) => ({
+          stat_name: s.stat.name,
+          base_stat: s.base_stat,
+        })),
+        image: details.sprites.front_default,
+        locations: locations.map((l: any) => l.location_area.name),
+      };
+      // Push the information into the pokemons array
+      data.push(newPoke);
+      console.log("Pokemon data:", data);
+    }
+  } */
 
   return {
     isLoading,
